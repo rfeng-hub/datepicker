@@ -2,6 +2,45 @@ module.exports = {
   wrapperElement: null,
   monthData: null,
   inputElement: null,
+  /**
+    * 格式化日期
+    * **/
+  formatDate(date) {
+    return (
+      date.getFullYear() +
+      "/" +
+      this.formatMD(date.getMonth() + 1) +
+      "/" +
+      this.formatMD(date.getDate())
+    )
+  },
+  /**
+    * 格式化日期
+    * **/
+  formatDatetime(date) {
+    return (
+      date.getFullYear() +
+      "/" +
+      this.formatMD(date.getMonth() + 1) +
+      "/" +
+      this.formatMD(date.getDate()) +
+      " " +
+      this.formatMD(date.getHours()) +
+      ":" +
+      this.formatMD(date.getMinutes())
+    )
+  },
+  /**
+   * 处理月 日 显示 个位补0
+   */
+  formatMD(num) {
+    return num >= 10 ? num.toString() : "0" + num;
+  },
+  /**
+   * 获取某个月的date信息
+   * @param {String} year 年
+   * @param {String} month 月
+   */
   getMonthDate(year, month) {
     const ret = []
     if (!year || !month) {
@@ -56,43 +95,8 @@ module.exports = {
       days: ret
     }
   },
-  /**
-    * 格式化日期
-    * **/
-  formatDate(date) {
-    return (
-      date.getFullYear() +
-      "/" +
-      this.formatMD(date.getMonth() + 1) +
-      "/" +
-      this.formatMD(date.getDate())
-    )
-  },
-  /**
-    * 格式化日期
-    * **/
-  formatDatetime(date) {
-    return (
-      date.getFullYear() +
-      "/" +
-      this.formatMD(date.getMonth() + 1) +
-      "/" +
-      this.formatMD(date.getDate()) +
-      " " +
-      this.formatMD(date.getHours()) +
-      ":" +
-      this.formatMD(date.getMinutes())
-    )
-  },
-  /**
-   * 处理月 日 显示 个位补0
-   */
-  formatMD(num) {
-    return num >= 10 ? num.toString() : "0" + num;
-  },
   init(selector) {
-    const nowDate = new Date()
-    this.render(nowDate.getFullYear(), nowDate.getMonth() + 1)
+    this.render()
 
     // 控制显示或者隐藏
     this.inputElement = document.querySelector(selector)
@@ -124,29 +128,31 @@ module.exports = {
    * 渲染一个月的日历
    * @param {String} direction 上/下
    */
-  render(direction, year, month) {
+  render(direction) {
+    let year, month
+    if (this.monthData) {
+      year = this.monthData.year
+      month = this.monthData.month
+    }
     if (direction === 'prev') {
       month--
     } else if (direction === 'next') {
       month++
     }
+    if (month === 0) {
+      month = 12
+      year--
+    }
+    console.log(year, month);
     const html = this.buildUi(year, month)
-    this.wrapperElement = document.querySelector('.ui-datepicker-wrapper')
+    console.log(this.monthData.year, this.monthData.month);
     if (!this.wrapperElement) {
       this.wrapperElement = document.createElement('div')
-      this.wrapperElement.className = 'ui-datepicker-wrapper'
-    }
-    this.wrapperElement.innerHTML = html
-    document.body.appendChild(this.wrapperElement)
-  },
-  buildUi(year, month) {
-    this.monthData = this.getMonthDate(year, month)  // 获取一个月的数据
-    console.log(this.monthData);
-    let html = `
-    <div class="ui-datepicker-header">
+      this.wrapperElement.innerHTML = `
+      <div class="ui-datepicker-header">
 				<a class="ui-datepicker-btn ui-datepicker-prev-btn">&lt;</a>
 				<a class="ui-datepicker-btn ui-datepicker-next-btn">&gt;</a>
-				<span class="ui-datepicker-curr-month">${this.monthData.year}-${this.monthData.month}</span>
+				<span class="ui-datepicker-curr-month"></span>
 			</div>
 			<div class="ui-datepicker-body">
 				<table>
@@ -161,7 +167,20 @@ module.exports = {
 							<th>日</th>
 						</tr>
 					</thead>
-          <tbody>`
+          <tbody>
+          </tbody>
+        </table>
+      </div>`
+      this.wrapperElement.className = 'ui-datepicker-wrapper'
+      document.body.appendChild(this.wrapperElement)
+    }
+    this.wrapperElement.querySelector("tbody").innerHTML = html
+    this.wrapperElement.querySelector('.ui-datepicker-curr-month').innerText = this.monthData.year + '-' + this.monthData.month
+  },
+  buildUi(year, month) {
+    this.monthData = this.getMonthDate(year, month)  // 获取一个月的数据
+    console.log(this.monthData);
+    let html = ''
     const days = this.monthData.days
     for (let i in days) {
       const date = days[i]
@@ -173,7 +192,6 @@ module.exports = {
         html += '</tr>'
       }
     }
-    html += '</tbody></table></div >'
 
     return html
   }

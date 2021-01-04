@@ -48,6 +48,12 @@
 				height: 30px;
 				text-align: center;
 			}
+			td:hover {
+				background-color: #efefef;
+			}
+			td.active {
+				background-color: #fff;
+			}
 			th {
 				font-size: 12px;
 				height: 40px;
