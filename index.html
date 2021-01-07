@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>Document</title>
 		<link
 			rel="stylesheet"
@@ -21,9 +21,14 @@
 				border: 1px solid #1abc9c;
 			}
 		</style>
+		<link href="./dist/main.css" rel="stylesheet" />
 	</head>
 	<body>
-		<input class="datepicker" id="datepicker1" value="2021-01-07" />
+		<input class="datepicker" id="datepicker1" />
 		<input class="datepicker" id="datepicker2" />
+		<script src="./dist/DatePicker.js"></script>
+		<script>
+			new DatePicker('.datepicker')
+		</script>
 	</body>
 </html>

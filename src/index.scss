@@ -1,73 +1,128 @@
+$mainColor: #409eff;
 /* 最外层区域 */
 .ui-datepicker-wrapper {
-	width: 240px;
+	width: 322px;
 	font-size: 16px;
-	color: #666;
-	box-shadow: 2px 2px 8px 2px rgba(128, 128, 128, 0.3);
-	display: none;
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+	transform: rotateX(-90deg);
+	transform-origin: center top;
+	transition: transform 0.1s ease;
 	position: absolute;
+	margin: 5px 0;
+	border-radius: 4px;
+	color: #606266;
+	z-index: 2050;
+	border: 1px solid #e4e7ed;
+	background: #fff;
+	line-height: 30px;
 
 	/* 头部区域 */
 	.ui-datepicker-header {
-		padding: 0 20px;
-		height: 50px;
-		line-height: 50px;
+		margin: 12px;
+		font-size: 16px;
+		box-sizing: border-box;
+		height: 30px;
 		text-align: center;
-		background-color: #f0f0f0;
-		border-bottom: 1px solid #ccc;
-		font-weight: bold;
+		color: #606266;
+		user-select: none;
 
+		.ui-datepicker-header-label {
+			font-weight: 500;
+			padding: 0 5px;
+			text-align: center;
+			cursor: pointer;
+		}
+		.ui-datepicker-header-label:hover {
+			color: $mainColor;
+		}
 		/* 设置两个按钮 */
 		.ui-datepicker-btn {
-			font-family: serif;
-			font-size: 20px;
-			width: 20px;
-			height: 50px;
-			line-height: 50px;
-			color: #1abc9c;
+			color: #303133;
 			cursor: pointer;
-			text-decoration: none;
+			width: 20px;
 		}
-		.ui-datepicker-prev-btn {
+		.ui-datepicker-btn:hover {
+			color: $mainColor;
+		}
+		.ui-datepicker-prev-btn,
+		.ui-datepicker-double-prev-btn {
 			float: left;
 		}
-		.ui-datepicker-next-btn {
+		.ui-datepicker-next-btn,
+		.ui-datepicker-double-next-btn {
 			float: right;
 		}
 	}
 
 	/* body区域 */
 	.ui-datepicker-body {
+		width: 292px;
+		margin: 15px;
+		position: relative;
 		table {
 			width: 100%;
+			user-select: none;
+			font-size: 12px;
+			table-layout: fixed;
 			border-collapse: collapse;
-
+		}
+		.ui-date-table {
 			/* 表头和正文 */
-			th,
+			th {
+				padding: 5px;
+				color: #606266;
+				font-weight: 400;
+				border-bottom: 1px solid #ebeef5;
+			}
 			td {
+				width: 32px;
 				height: 30px;
+				padding: 4px 0;
+				box-sizing: border-box;
 				text-align: center;
+				cursor: pointer;
+				position: relative;
+				span {
+					width: 24px;
+					height: 24px;
+					display: inline-block;
+					margin: 0 auto;
+					line-height: 24px;
+					border-radius: 50%;
+				}
+			}
+			td.prev-month,
+			td.next-month {
+				color: #c0c4cc;
+			}
+			td.today,
+			td:hover {
+				color: $mainColor;
+			}
+			td.current {
+				span {
+					background-color: $mainColor;
+					color: #fff;
+				}
+			}
+		}
+		.ui-year-table,
+		.ui-month-table {
+			border-top: 1px solid #ebeef5;
+			color: #606266;
+			td {
+				text-align: center;
+				padding: 20px 3px;
+				width: 48px;
+				line-height: 32px;
+				cursor: pointer;
 			}
 			td:hover {
-				background-color: #efefef;
-			}
-			td.active {
-				background-color: #fff;
-			}
-			th {
-				font-size: 12px;
-				height: 40px;
-				line-height: 40px;
-			}
-			td {
-				border: 1px solid #f0f0f0;
-				font-size: 10px;
-				width: 14%;
-				cursor: pointer;
+				color: $mainColor;
 			}
 		}
 	}
 }
 .ui-datepicker-wrapper-show {
-	display: block;
+	transform: rotateX(0deg);
 }

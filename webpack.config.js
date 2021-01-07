@@ -9,9 +9,11 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
-    publicPath: './',
-    filename: 'build.js',
-    path: path.join(__dirname, './dist')
+    path: path.join(__dirname, 'dist'),
+    filename: 'DatePicker.js',
+    library: 'DatePicker',
+    libraryTarget: 'umd',
+    libraryExport: 'default'
   },
   optimization: {
     minimize: true,
@@ -24,10 +26,6 @@ module.exports = {
       {
         test: /\.(scss|sass)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.(png|svg|jpg|gif)/,
-        use: ['file-loader']
       }, {
         test: /\.js$/,
         loader: 'babel-loader'
@@ -50,5 +48,5 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
   ],
-  mode: 'production'
+  mode: 'development'
 }

@@ -32,6 +32,7 @@
 		"webpack-dev-server": "^3.11.0"
 	},
 	"dependencies": {
-		"@babel/runtime": "^7.12.5"
+		"@babel/runtime": "^7.12.5",
+		"jquery": "^3.5.1"
 	}
 }

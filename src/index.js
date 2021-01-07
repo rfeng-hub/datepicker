@@ -1,11 +1,4 @@
-import './index.scss'
+import DatePicker from './picker'
 
-import calendar from './data.js'
-
-calendar.init('.datepicker')
-
-if (process.env.NODE_ENV === 'development') {
-  console.log('development');
-} else {
-  console.log('production');
-}
+const datePicker1 = new DatePicker('#datepicker1', { readonly: true })
+const datePicker2 = new DatePicker('#datepicker2')
